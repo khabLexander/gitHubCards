@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import './App.css'
+const axios = require('axios');
 
 const testData = [
-    {name: "Mauricio Matango", avatar_url: "https://avatars.githubusercontent.com/u/61792044?v=4", company: "@Yavirac"},
-    {name: "Bryan Perez", avatar_url: "https://avatars.githubusercontent.com/u/59462642?v=4", company: "@Yavirac"},
-    {name: "Henrry Acosta", avatar_url: "https://avatars.githubusercontent.com/u/67518799?v=4", company: "@Yavirac"},
+    {id: '001' , name: "Mauricio Matango", avatar_url: "https://avatars.githubusercontent.com/u/61792044?v=4", company: "@Yavirac"},
+    {id: '002',name: "Bryan Perez", avatar_url: "https://avatars.githubusercontent.com/u/59462642?v=4", company: "@Yavirac"},
+    {id: '003',name: "Henrry Acosta", avatar_url: "https://avatars.githubusercontent.com/u/67518799?v=4", company: "@Yavirac"},
 ];
 
 const CardList = ({profiles}) => (
 	<div>
-  	{profiles.map(profile => <Tarjeta {...profile}/>)}
+  	{profiles.map(profile => <Tarjeta key={profile.id} {...profile}/>)}
 	</div>
 );
 
@@ -32,7 +33,8 @@ const Form =  ({onSubmited})  => {
   
 	const handleSubmit = async(event) => {
   	event.preventDefault();
-    const resp =  await fetch(`https://api.github.com/users/${userName}`);
+    const resp =  await axios.get(`https://api.github.com/users/${userName}`);
+    console.log(resp)
     onSubmited(resp.data)
     setUserName('');
   };
